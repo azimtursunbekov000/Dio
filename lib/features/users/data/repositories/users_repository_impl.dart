@@ -1,4 +1,3 @@
-
 import 'dart:developer';
 
 import 'package:dio/dio.dart';
@@ -15,8 +14,8 @@ class UsersRepositoryImpl implements UsersRepository {
     try {
       Response response = await apiRequester.toGet('users');
 
-      log('detAllUsers response statusCode == ${response.statusCode}');
-      log('detAllUsers response data == ${response.data}');
+      log('getAllUsers response statusCode == ${response.statusCode}');
+      log('getAllUsers response data == ${response.data}');
 
       if (response.statusCode == 200) {
         return response.data
@@ -34,12 +33,11 @@ class UsersRepositoryImpl implements UsersRepository {
     try {
       Response response = await apiRequester.toGet('users/$id');
 
-      print('getUserDetail response statusCode == ${response.statusCode}');
-      print('getUserDetail response data == ${response.data}');
+      log('getUserDetail response statusCode == ${response.statusCode}');
+      log('getUserDetail response data == ${response.data}');
 
       if (response.statusCode == 200) {
         return UsersModel.fromJson(response.data);
-
       }
       throw response;
     } catch (e) {

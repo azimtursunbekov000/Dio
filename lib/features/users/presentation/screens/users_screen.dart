@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lessons43/features/users/data/repositories/users_repository_impl.dart';
 import 'package:lessons43/features/users/domain/use_cases/users_use_case.dart';
 import 'package:lessons43/features/users/presentation/logic/bloc/users_bloc.dart';
+import 'package:lessons43/features/users/presentation/screens/users_detail_screen.dart';
 
 class UsersScreen extends StatefulWidget {
   const UsersScreen({super.key});
@@ -17,6 +18,7 @@ class _UsersScreenState extends State<UsersScreen> {
       usersRepository: UsersRepositoryImpl(),
     ),
   );
+
   @override
   void initState() {
     usersBloc.add(GetAllUsersEvent());
@@ -56,13 +58,25 @@ class _UsersScreenState extends State<UsersScreen> {
               return ListView.separated(
                   itemCount: state.userModelList.length,
                   itemBuilder: (context, index) {
-                    return Container(
-                      color: Colors.red,
-                      child: Column(
-                        children: [
-                          Text(state.userModelList[index].name ?? ""),
-                          Text(state.userModelList[index].email ?? ''),
-                        ],
+                    return InkWell(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => UsersDetailScreen(
+                              id: state.userModelList[index].id ?? 0,
+                            ),
+                          ),
+                        );
+                      },
+                      child: Container(
+                        color: Colors.red,
+                        child: Column(
+                          children: [
+                            Text(state.userModelList[index].name ?? ""),
+                            Text(state.userModelList[index].email ?? ''),
+                          ],
+                        ),
                       ),
                     );
                   },
@@ -70,7 +84,7 @@ class _UsersScreenState extends State<UsersScreen> {
                     return SizedBox(height: 16);
                   });
             }
-            return SizedBox();
+            return SizedBox(height: 16);
           },
         ),
       ),
